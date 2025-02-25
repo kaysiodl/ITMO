@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "name": "Robert",
+    "coordinates": {
+      "x": 34,
+      "y": 432
+    },
+    "creationDate": {
+      "dateTime": {
+        "date": {
+          "year": 2025,
+          "month": 2,
+          "day": 25
+        },
+        "time": {
+          "hour": 12,
+          "minute": 10,
+          "second": 24,
+          "nano": 658842900
+        }
+      },
+      "offset": {
+        "totalSeconds": 10800
+      },
+      "zone": {
+        "id": "Europe/Moscow"
+      }
+    },
+    "height": 165.0,
+    "eyeColor": "GREEN",
+    "hairColor": "WHITE",
+    "nationality": "FRANCE",
+    "location": {
+      "x": 32.5,
+      "y": 234545,
+      "z": 341,
+      "name": "fdvsc"
+    }
+  }
+]

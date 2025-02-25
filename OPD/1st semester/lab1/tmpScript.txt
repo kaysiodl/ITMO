@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+cd lab0
+
+chmod -R u+r horsea6
+chmod u+w seadra6/phanpy
+cp horsea6 seadra6/phanpy
+chmod 550 seadra6/phanpy
+chmod 066 horsea6
+
+ln -s seadra6/ Copy_64
+
+ln beheeyem6 alakazam4/munnabeheeyem
+
+# символическая ссылка для файла beheeyem6
+
+chmod u+r alakazam4
+chmod u+r murkrow6
+cat murkrow6/lillipup alakazam4/pansage > beheeyem6_96
+chmod u=wx,g=rwx,o=rx alakazam4
+chmod 335 murkrow6
+
+chmod -R u+rw alakazam4
+chmod -R u+r seadra6
+cp -R seadra6 alakazam4/swampert
+chmod 736 seadra6
+chmod 307 seadra6/kabuto
+chmod 550 seadra6/phanpy
+chmod uo=,g=rw seadra6/wurmple
+chmod u=wx,g=rwx,o=rx alakazam4
+chmod ug=, o=rw alakazam4/shuppet
+chmod ugo=r alakazam4/pansage
+chmod ug=,o=rw alakazam4/munna
+chmod u=wx,go=x alakazam4/swampert
+
+

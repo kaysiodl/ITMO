@@ -1,0 +1,19 @@
+[
+  {
+    "name": "svozov",
+    "height": 120,
+    "coordinates": {
+      "x": 52,
+      "y": 52
+    },
+    "EyeColor": "BROWN",
+    "hairColor": "BLACK",
+    "country": "FRANCE",
+    "location": {
+      "x": 54,
+      "y": 2025,
+      "z": 52,
+      "name": "aaa"
+    }
+  }
+]
