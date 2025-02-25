@@ -1,0 +1,32 @@
+\documentclass[12pt, onecolumn]{article}
+% Поддержка языков
+\usepackage[english, russian]{babel} 
+
+% Настройка кодировок
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage{newtxmath}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+\begin{document}
+\begin{tikzpicture}
+
+	%Задаем точки
+	\coordinate (O) at (0,0);
+	\coordinate (A) at (0,0);
+	\coordinate (C) at (0,-7);
+
+	% Подписываем точки
+            \filldraw[black] (A) circle (1pt) node[anchor=south]{A};
+            \filldraw[black] (O) circle (1pt) node[anchor=west]{B};
+            \filldraw[black] (C) circle (1pt) node[anchor=north]{C};
+             
+
+\end{tikzpicture}
+\end{document}
