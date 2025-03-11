@@ -1,13 +1,23 @@
 package lab5.itmo.client.io.console;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class StandartConsole implements Console{
-    private static Scanner fileScanner = null;
-
+    private boolean scriptExecutionMode = false;
     private static Scanner scanner = new Scanner(System.in);
+    private List<String> script = new ArrayList<>();
+
+    public void setScriptExecutionMode(boolean scriptExecutionMode) {
+        this.scriptExecutionMode = scriptExecutionMode;
+    }
+
+    public void setScript(List<String> script){
+        this.script.addAll(script);
+    }
 
     @Override
     public void println(Object obj){
@@ -21,18 +31,19 @@ public class StandartConsole implements Console{
 
     @Override
     public String read() throws NoSuchElementException, IllegalStateException {
-        return (fileScanner != null ? fileScanner : scanner).nextLine();
-
+        if (!scriptExecutionMode) {
+            return scanner.nextLine();
+        } else{
+            if (script.size() == 1) setScriptExecutionMode(false);
+            String line = script.getFirst();
+            script.removeFirst();
+            println(line);
+            return line;
+        }
     }
 
     @Override
-    public void selectFileScanner(Scanner scanner) {
-        this.fileScanner = scanner;
-    }
+    public void printError(String error){System.out.println(error);}
 
-    @Override
-    public void selectConsoleScanner() {
-        this.fileScanner = null;
-    }
 
 }

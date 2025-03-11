@@ -19,6 +19,10 @@ public class Save extends Command{
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
+        if (args.length != 1) {
+            throw new ExecutionError("This command accepts one argument.");
+        }
+
         try {
             collectionManager.saveCollection(Path.of(args[0]));
         } catch (IOException e) {

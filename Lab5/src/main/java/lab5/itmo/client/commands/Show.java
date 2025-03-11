@@ -20,9 +20,10 @@ public class Show extends Command{
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
-        List<Person> people = collectionManager.sort();
 
-        if (people.isEmpty()) {
+        List<Integer> sortedKeys = collectionManager.sort();
+
+        if (sortedKeys.isEmpty()) {
             try {
                 console.println("Collection is empty.");
             } catch (IOException e) {
@@ -33,7 +34,8 @@ public class Show extends Command{
 
         try {
             StringBuilder output = new StringBuilder();
-            for (Person person : people) {
+            for (Integer key : sortedKeys) {
+                Person person = (Person) collectionManager.getCollection().get(key);
                 output.append(person).append("\n");
             }
             console.println(output.toString());

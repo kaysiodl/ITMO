@@ -14,7 +14,6 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 public class CollectionManager{
-
     private final IdGenerator idGenerator = new IdGenerator();
 
     private Map<Integer, Person> collection = new LinkedHashMap<Integer, Person>();
@@ -23,18 +22,11 @@ public class CollectionManager{
 
     private LocalDateTime lastInitTime;
 
-    public void add(Person person) throws NullFieldException {
-        if (person == null) {
-            throw new NullFieldException("Person cannot be null.");
-        }
-
+    public void add(Person person){
         Integer id = this.idGenerator.getNextId();
 
         if (person.getId() == null) {
-            id = this.idGenerator.getNextId();
-            while (!isIdFree(id)) {
-                id = this.idGenerator.getNextId();
-            }
+            id = collection.values().stream().map(Person::getId).max(Integer::compareTo).orElse(0) + 1;
             person.setId(id);
         }
         if (person.getCreationDate() == null) {
@@ -42,14 +34,19 @@ public class CollectionManager{
         }
         person.validate();
         collection.put(id, person);
+        setLastInitTime(LocalDateTime.now());
         System.out.println("New element added to collection successfully. ");
     }
 
-    private boolean isIdFree(Integer id) {
-        for(Person person: collection.values()){
-            if (Objects.equals(id, person.getId())) return false;
+    public void add(Person person, Integer id){
+        person.setId(id);
+        if (person.getCreationDate() == null) {
+            person.setCreationDate(ZonedDateTime.now(ZoneId.systemDefault()));
         }
-        return true;
+        person.validate();
+        collection.put(id, person);
+        setLastInitTime(LocalDateTime.now());
+        System.out.println("New element added to collection successfully. ");
     }
 
     public void saveCollection(Path path) throws IOException {
@@ -78,26 +75,21 @@ public class CollectionManager{
         }
     }
 
-    public List sort(){
+    public List<Integer> sort(){
         List<Integer> sortedList = new ArrayList<>(collection.keySet());
         Collections.sort(sortedList);
         return sortedList;
     }
 
-
-    public boolean removeById(Integer id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID cannot be null.");
+    public Person getById(Integer id) {
+        for (Person person : collection.values()) {
+            if (Objects.equals(person.getId(), id)) return person;
         }
+        return null;
+    }
 
-        if (collection.containsKey(id)) {
-            collection.remove(id);
-            System.out.println("Element with id " + id + " has been removed.");
-            return true;
-        } else {
-            System.out.println("Element with id " + id + " not found.");
-            return false;
-        }
+    public void removeById(Integer id) {
+        collection.remove(id);
     }
 
     public boolean removeAll() {
@@ -117,14 +109,27 @@ public class CollectionManager{
         return lastInitTime;
     }
 
+    public void setLastInitTime(LocalDateTime lastInitTime) {
+        this.lastInitTime = lastInitTime;
+    }
+
     @Override
     public String toString() {
         if (collection.isEmpty()) {
-            return " Collection is empty.";
+            return "Collection is empty.";
         }
-        System.out.println(collection);
-        StringBuilder string = new StringBuilder();
-        return string.toString().trim();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<Integer, Person> entry : collection.entrySet()) {
+            int key = entry.getKey();
+            Person person = entry.getValue();
+            stringBuilder.append(key)
+                    .append(": ")
+                    .append(person)
+                    .append("\n");
+        }
+
+        return stringBuilder.toString().trim();
     }
 
 }

@@ -17,6 +17,10 @@ public class Clear extends Command {
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
+        if (args.length > 0) {
+            throw new ExecutionError("This command does not accept any arguments.");
+        }
+
         return collectionManager.removeAll();
     }
 }

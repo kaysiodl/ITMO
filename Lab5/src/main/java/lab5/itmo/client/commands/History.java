@@ -19,10 +19,6 @@ public class History extends Command{
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
-        if (args.length > 0) {
-            throw new ExecutionError("This command does not accept any arguments.");
-        }
-
         List<Command> commandHistory = commandManager.getHistory();
 
         if (commandHistory.isEmpty()) {

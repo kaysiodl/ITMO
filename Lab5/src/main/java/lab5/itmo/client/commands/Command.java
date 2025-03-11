@@ -1,7 +1,9 @@
 package lab5.itmo.client.commands;
 
 import lab5.itmo.exceptions.ExecutionError;
+import lab5.itmo.exceptions.NullFieldException;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public abstract class Command {
@@ -21,8 +23,7 @@ public abstract class Command {
         return description;
     }
 
-    public abstract boolean apply(String[] args) throws ExecutionError;
-
+    public abstract boolean apply(String[] args) throws ExecutionError, NullFieldException;
 
     @Override
     public boolean equals(Object o) {

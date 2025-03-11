@@ -25,7 +25,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
     private static int idCounter = 1;
 
     public Person(String name, Coordinates coordinates,
-                  int height, Color eyeColor, Color hairColor,
+                  float height, Color eyeColor, Color hairColor,
                   Country nationality, Location location){
         this.id = idCounter++;
         this.name = name;
@@ -44,8 +44,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
         return id;
     }
 
-    public void setId(Integer id) throws NullFieldException {
-        if (id == null) throw new NullFieldException("id");
+    public void setId(Integer id){
         this.id = id;
     }
 
@@ -96,6 +95,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
     }
     //getters
 
+    public int getSumCoordinates(){return coordinates.sumCoordinates(); }
     @Override
     public void validate() throws IllegalArgumentException{
         if (id<=0 || id == null) throw new IllegalArgumentException("Your id can't be lower than 0");
@@ -123,15 +123,14 @@ public class Person extends Element implements Validatable, Comparable<Element> 
     @Override
     public String toString() {
         return "Person {" +
-                "\n  id=" + id +
-                ",\n  name='" + name + '\'' +
-                ",\n  coordinates=" + coordinates +
-                ",\n  creationDate=" + creationDate +
-                ",\n  height=" + height +
-                ",\n  eyeColor=" + eyeColor +
-                ",\n  hairColor=" + hairColor +
-                ",\n  nationality=" + (nationality != null ? nationality : "unspecified") +
-                ",\n  location=" + (location != null ? location : "unspecified") +
+                "\n  name = '" + name + '\'' +
+                ",\n  coordinates = " + coordinates +
+                ",\n  creationDate = " + creationDate +
+                ",\n  height = " + height +
+                ",\n  eyeColor = " + eyeColor +
+                ",\n  hairColor = " + hairColor +
+                ",\n  nationality = " + (nationality != null ? nationality : "unspecified") +
+                ",\n  location = " + (location != null ? location : "unspecified") +
                 "\n}";
     }
 }

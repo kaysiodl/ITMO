@@ -4,6 +4,7 @@ import lab5.itmo.client.CommandManager;
 import lab5.itmo.client.commands.*;
 import lab5.itmo.client.io.Controller;
 import lab5.itmo.client.io.console.StandartConsole;
+import lab5.itmo.collection.managers.AskManager;
 import lab5.itmo.collection.managers.CollectionManager;
 import lab5.itmo.collection.models.*;
 
@@ -19,10 +20,10 @@ public class Main {
             Person person1 = new Person("Artem", coordinates, 180, Color.BLUE, Color.BROWN, Country.SPAIN, location);
             //DumpManager dumpManager = new DumpManager(Path.of("test2.json"));
             CommandManager commandManager = new CommandManager();
+            AskManager askManager = new AskManager();
             CollectionManager collectionManager = new CollectionManager();
             collectionManager.add(person);
             collectionManager.add(person1);
-            collectionManager.removeById(2);
             collectionManager.saveCollection(Path.of("test2.json"));
             StandartConsole console = new StandartConsole();
             try {
@@ -33,14 +34,22 @@ public class Main {
                 throw new RuntimeException(e);
             }
 
+            Controller controller = new Controller(commandManager, console);
+
             commandManager.register(new Help(console, commandManager));
             commandManager.register(new Show(console, collectionManager));
             commandManager.register(new Clear(console, collectionManager));
             commandManager.register(new Save(console, collectionManager));
             commandManager.register(new Exit());
             commandManager.register(new History(console, commandManager));
+            commandManager.register(new UpdateId(console, collectionManager));
+            commandManager.register(new Insert(console, collectionManager, askManager));
+            commandManager.register(new RemoveKey(console, collectionManager));
+            commandManager.register(new Info(console, collectionManager));
+            commandManager.register(new RemoveGreater(console, collectionManager));
+            commandManager.register(new ReplaceIfGreater(console, collectionManager));
+            commandManager.register(new ExecuteScript(console, controller));
 
-            Controller controller = new Controller(commandManager, console);
             controller.run();
         } catch (Exception e) {
             System.out.println(e.getMessage());

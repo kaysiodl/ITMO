@@ -1,0 +1,5 @@
+help
+info
+show
+save test1.json
+history

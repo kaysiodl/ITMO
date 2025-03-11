@@ -10,6 +10,8 @@ public class Coordinates{
         this.y = y;
     }
 
+    public int sumCoordinates(){return x + y; }
+
     @Override
     public String toString() {
         return x + ";" + y;

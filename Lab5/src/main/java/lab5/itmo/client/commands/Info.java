@@ -19,10 +19,6 @@ public class Info extends Command{
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
-        if (args.length > 0) {
-            throw new ExecutionError("This command does not accept any arguments.");
-        }
-
         String collectionType = collectionManager.getCollection().getClass().getSimpleName();
         LocalDateTime lastInitTime = collectionManager.getLastInitTime();
         int collectionSize = collectionManager.getCollection().size();

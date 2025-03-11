@@ -22,6 +22,10 @@ public class CommandManager {
     }
 
     public Command getCommand(String commandName){
+        if (commandName == null || commandName.trim().isEmpty()) {
+            throw new NotFoundCommandException("Command name can't be empty.");
+        }
+
         return commands.stream()
                 .filter(command -> commandName.equalsIgnoreCase(command.getName()))
                 .findFirst()

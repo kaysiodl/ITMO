@@ -10,14 +10,14 @@
       "dateTime": {
         "date": {
           "year": 2025,
-          "month": 2,
-          "day": 25
+          "month": 3,
+          "day": 11
         },
         "time": {
-          "hour": 12,
-          "minute": 10,
-          "second": 24,
-          "nano": 658842900
+          "hour": 1,
+          "minute": 22,
+          "second": 15,
+          "nano": 271232200
         }
       },
       "offset": {
@@ -31,6 +31,45 @@
     "eyeColor": "GREEN",
     "hairColor": "WHITE",
     "nationality": "FRANCE",
+    "location": {
+      "x": 32.5,
+      "y": 234545,
+      "z": 341,
+      "name": "fdvsc"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Artem",
+    "coordinates": {
+      "x": 34,
+      "y": 432
+    },
+    "creationDate": {
+      "dateTime": {
+        "date": {
+          "year": 2025,
+          "month": 3,
+          "day": 11
+        },
+        "time": {
+          "hour": 1,
+          "minute": 22,
+          "second": 15,
+          "nano": 272235000
+        }
+      },
+      "offset": {
+        "totalSeconds": 10800
+      },
+      "zone": {
+        "id": "Europe/Moscow"
+      }
+    },
+    "height": 180.0,
+    "eyeColor": "BLUE",
+    "hairColor": "BROWN",
+    "nationality": "SPAIN",
     "location": {
       "x": 32.5,
       "y": 234545,

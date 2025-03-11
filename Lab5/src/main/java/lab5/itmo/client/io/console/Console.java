@@ -10,7 +10,5 @@ public interface Console {
 
     String read();
 
-    void selectFileScanner(Scanner obj);
-
-    void selectConsoleScanner();
+    void printError(String error);
 }
