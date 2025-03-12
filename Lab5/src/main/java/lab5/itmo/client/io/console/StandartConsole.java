@@ -15,6 +15,14 @@ public class StandartConsole implements Console{
         this.scriptExecutionMode = scriptExecutionMode;
     }
 
+    public boolean isScriptExecutionMode() {
+        return scriptExecutionMode;
+    }
+
+    public List<String> getScriptData(){
+        return script;
+    }
+
     public void setScript(List<String> script){
         this.script.addAll(script);
     }

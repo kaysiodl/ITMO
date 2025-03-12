@@ -39,7 +39,7 @@ public class RemoveGreater extends Command {
             throw new NullFieldException("Id can't be null.");
         }
 
-        Map<Integer, Person> persons = collectionManager.getCollection();
+        Map persons = collectionManager.getCollection();
         if (persons == null || persons.isEmpty()) {
             console.print("No persons to compare.\n");
         }

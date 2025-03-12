@@ -16,18 +16,17 @@ public class Main {
         try {
             Coordinates coordinates = new Coordinates(34, 432);
             Location location = new Location(32.5f, 234545L, 341L, "fdvsc");
-            Person person = new Person("Robert", coordinates, 165, Color.GREEN, Color.WHITE, Country.FRANCE, location);
-            Person person1 = new Person("Artem", coordinates, 180, Color.BLUE, Color.BROWN, Country.SPAIN, location);
+            Person person = new Person("habibi", coordinates, 165, Color.GREEN, Color.WHITE, Country.FRANCE, location);
+            Person person1 = new Person("polyakov", coordinates, 180, Color.BLUE, Color.BROWN, Country.SPAIN, location);
             //DumpManager dumpManager = new DumpManager(Path.of("test2.json"));
             CommandManager commandManager = new CommandManager();
             AskManager askManager = new AskManager();
             CollectionManager collectionManager = new CollectionManager();
             collectionManager.add(person);
             collectionManager.add(person1);
-            collectionManager.saveCollection(Path.of("test2.json"));
             StandartConsole console = new StandartConsole();
             try {
-                collectionManager.loadCollection(Path.of("test.json"));
+                collectionManager.loadCollection();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (RuntimeException e) {

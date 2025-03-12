@@ -22,6 +22,8 @@ public class CollectionManager{
 
     private LocalDateTime lastInitTime;
 
+    Path path = Path.of(System.getProperty("filePath", "data.json"));
+
     public void add(Person person){
         Integer id = this.idGenerator.getNextId();
 
@@ -49,7 +51,7 @@ public class CollectionManager{
         System.out.println("New element added to collection successfully. ");
     }
 
-    public void saveCollection(Path path) throws IOException {
+    public void saveCollection() throws IOException {
         if (collection.isEmpty()) {
             System.out.println("Collection is empty. Nothing to save.");
             return;
@@ -68,8 +70,8 @@ public class CollectionManager{
         lastSaveTime = LocalDateTime.now();
     }
 
-    public void loadCollection(Path path) throws IOException, NullFieldException {
-        List<Person> personList = new DumpManager(path).jsonFileToList();
+    public void loadCollection() throws IOException, NullFieldException {
+        List<Person> personList = new DumpManager().jsonFileToList();
         for (Person person : personList) {
             this.add(person);
         }

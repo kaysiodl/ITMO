@@ -19,16 +19,10 @@ public class Save extends Command{
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
-        if (args.length != 1) {
-            throw new ExecutionError("This command accepts one argument.");
-        }
-
         try {
-            collectionManager.saveCollection(Path.of(args[0]));
+            collectionManager.saveCollection();
         } catch (IOException e) {
             throw new ExecutionError(e.getMessage());
-        } catch (IndexOutOfBoundsException e){
-            throw new ExecutionError("Enter the file name.");
         }
         return true;
     }

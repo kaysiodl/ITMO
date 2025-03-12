@@ -1,6 +1,7 @@
 package lab5.itmo.collection.managers;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.ZoneId;
@@ -11,25 +12,23 @@ import java.util.List;
 import com.google.gson.*;
 
 import lab5.itmo.client.io.utility.IOHandler;
+import lab5.itmo.client.io.utility.ZonedDateTimeAdapter;
 import lab5.itmo.collection.models.Person;
 
 public class DumpManager implements IOHandler<JsonElement> {
 
-    protected final Path path;
+    protected Path path = Path.of(System.getProperty("filePath", "data.json"));
 
-    protected static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    Gson gson = new GsonBuilder()
+            .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
+            .setPrettyPrinting()
+            .create();
+
 
     protected BufferedInputStream reader;
 
     protected BufferedWriter writer;
 
-    public DumpManager(Path path){
-        if(Files.notExists(path)){
-            System.err.println("File " + path.getFileName() + " isn't found");
-        }
-
-        this.path = path;
-    }
 
     /**
      * Converts file json into a list of Person type
@@ -38,7 +37,7 @@ public class DumpManager implements IOHandler<JsonElement> {
      * @throws IOException
      */
     public List<Person> jsonFileToList() throws IOException {
-        JsonElement jsonElement = null;
+        JsonElement jsonElement;
         List<Person> personList = new ArrayList<>();
 
         jsonElement = this.read();
@@ -46,12 +45,12 @@ public class DumpManager implements IOHandler<JsonElement> {
         if (jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             for (JsonElement element : jsonArray.asList()) {
-                Person person = new Gson().fromJson(element, Person.class);
+                Person person = gson.fromJson(element, Person.class);
                 if (person.getCreationDate() == null) person.setCreationDate(ZonedDateTime.now(ZoneId.systemDefault()));
                 personList.add(person);
             }
         } else {
-            Person person = new Gson().fromJson(jsonElement, Person.class);
+            Person person = gson.fromJson(jsonElement, Person.class);
             if (person.getCreationDate() == null) person.setCreationDate(ZonedDateTime.now(ZoneId.systemDefault()));
             personList.add(person);
         }
@@ -64,6 +63,7 @@ public class DumpManager implements IOHandler<JsonElement> {
      *
      * @return
      */
+
     @Override
     public JsonElement read() throws FileNotFoundException {
         reader = new BufferedInputStream(new FileInputStream(path.toFile()));
@@ -77,8 +77,19 @@ public class DumpManager implements IOHandler<JsonElement> {
             System.err.println("Can't read file: " + path);
             return null;
         }
-        JsonElement jsonElement = JsonParser.parseString(stringBuilder.toString());
-        return jsonElement;
+
+        String jsonString = stringBuilder.toString();
+        if (jsonString.trim().isEmpty()) {
+            System.err.println("File is empty: " + path);
+            return null;
+        }
+
+        try {
+            return JsonParser.parseString(jsonString);
+        } catch (JsonSyntaxException e) {
+            System.err.println("Invalid json syntax in file: " + path);
+            return null;
+        }
     }
 
     /**

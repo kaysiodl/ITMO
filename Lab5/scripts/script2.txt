@@ -1,5 +1,5 @@
-insert 5
-hbhb
+update 2
+habibi
 49894
 4848
 4848
@@ -9,3 +9,4 @@ spain
 678
 78
 9494
+kjhbgv
