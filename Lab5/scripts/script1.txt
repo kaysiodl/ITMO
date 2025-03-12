@@ -3,4 +3,4 @@ info
 show
 save test1.json
 history
-execute_script scripts/script1.txt
+execute_script scripts/script2.txt

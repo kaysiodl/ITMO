@@ -1,12 +1,1 @@
-update 2
-habibi
-49894
-4848
-4848
-Brown
-Brown
-spain
-678
-78
-9494
-kjhbgv
+execute_script scripts/script3.txt

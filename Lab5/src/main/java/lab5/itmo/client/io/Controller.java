@@ -10,7 +10,6 @@ import lab5.itmo.exceptions.NullFieldException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Controller {
     private final StandartConsole console;
@@ -22,7 +21,7 @@ public class Controller {
         this.commandManager = commandManager;
     }
 
-    public void addLaunchedScript(String name){
+    public void addLaunchedScript(String name) {
         launchedScripts.add(name);
     }
 
@@ -30,7 +29,7 @@ public class Controller {
         return launchedScripts;
     }
 
-    public void clearLaunchedScripts(){
+    public void clearLaunchedScripts() {
         this.launchedScripts.clear();
     }
 
@@ -59,14 +58,12 @@ public class Controller {
         }
     }
 
-    public String handleInput(String input) {
+    public String handleInput(String input){
         try {
             boolean isSuccess = parseInput(input);
             return input + (isSuccess ? " successfully" : " unsuccessfully") + " completed";
         } catch (ExecutionError e) {
             return "Execution error: " + e.getMessage();
-        } catch (NotFoundCommandException e) {
-            return "Error: " + e.getMessage() + " Type help to get info about commands.";
         }
     }
 

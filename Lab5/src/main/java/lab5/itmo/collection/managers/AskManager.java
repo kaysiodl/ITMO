@@ -83,7 +83,7 @@ public class AskManager {
                 if (!line.isEmpty()) {
                     try {
                         y = Integer.parseInt(line);
-                        if (y < -652){
+                        if (y < -652) {
                             console.printError("Coordinate y can't be lower than -652. PLease try again");
                             continue;
                         }
@@ -110,7 +110,7 @@ public class AskManager {
                 if (!line.equals("")) {
                     try {
                         height = Float.parseFloat(line);
-                        if (height <= 0){
+                        if (height <= 0) {
                             console.printError("Height must be higher than 0. PLease try again");
                             continue;
                         }
@@ -168,7 +168,7 @@ public class AskManager {
         }
     }
 
-    public static Color askHairColor (Console console) throws Break {
+    public static Color askHairColor(Console console) throws Break {
         try {
             Color hairColor;
             while (true) {
@@ -308,7 +308,6 @@ public class AskManager {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }

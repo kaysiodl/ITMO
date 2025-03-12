@@ -1,6 +1,7 @@
 package lab5.itmo.collection.managers;
 
 import com.google.gson.*;
+import lab5.itmo.exceptions.ExecutionError;
 import lab5.itmo.exceptions.NullFieldException;
 import lab5.itmo.client.io.utility.IdGenerator;
 import lab5.itmo.collection.models.Person;
@@ -22,13 +23,19 @@ public class CollectionManager{
 
     private LocalDateTime lastInitTime;
 
-    Path path = Path.of(System.getProperty("filePath", "data.json"));
+    Path path = Path.of("data.json");
 
     public void add(Person person){
         Integer id = this.idGenerator.getNextId();
 
+        while (collection.containsKey(id)) {
+            id = this.idGenerator.getNextId(); // Генерируем новый id
+        }
+
         if (person.getId() == null) {
-            id = collection.values().stream().map(Person::getId).max(Integer::compareTo).orElse(0) + 1;
+            id = collection.values().stream()
+                    .map(Person::getId).max(Integer::compareTo)
+                    .orElse(0) + 1;
             person.setId(id);
         }
         if (person.getCreationDate() == null) {
@@ -51,6 +58,7 @@ public class CollectionManager{
         System.out.println("New element added to collection successfully. ");
     }
 
+
     public void saveCollection() throws IOException {
         if (collection.isEmpty()) {
             System.out.println("Collection is empty. Nothing to save.");
@@ -70,9 +78,21 @@ public class CollectionManager{
         lastSaveTime = LocalDateTime.now();
     }
 
-    public void loadCollection() throws IOException, NullFieldException {
+    public void loadCollection() throws IOException {
         List<Person> personList = new DumpManager().jsonFileToList();
         for (Person person : personList) {
+            for(Person person1: personList){
+                if(Objects.equals(person.getId(), person1.getId()) && !person.equals(person1)){
+                    Integer id = collection.values().stream()
+                            .map(Person::getId)
+                            .max(Integer::compareTo)
+                            .orElse(0) + 1;
+                    person1.setId(id);
+                    saveCollection();
+                    throw new ExecutionError("id of every person must be unique, so we changed id of the second person. Try again.");
+                }
+            }
+
             this.add(person);
         }
     }

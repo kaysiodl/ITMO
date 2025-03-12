@@ -7,16 +7,32 @@ import lab5.itmo.collection.managers.CollectionManager;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class Info extends Command{
+/**
+ * A command that outputs information about the collection.
+ */
+public class Info extends Command {
     private final Console console;
     private CollectionManager collectionManager = new CollectionManager();
 
-    public Info(Console console, CollectionManager collectionManager){
+    /**
+     * Constructs an {@code Info} command.
+     *
+     * @param console           The console used for input and output.
+     * @param collectionManager The collection manager providing the collection information.
+     */
+    public Info(Console console, CollectionManager collectionManager) {
         super("info", "output information about the collection (type, initialization date, number of items, etc.)");
         this.collectionManager = collectionManager;
         this.console = console;
     }
 
+    /**
+     * Executes the command by printing information about the collection.
+     *
+     * @param args The arguments passed to the command (not used).
+     * @return {@code true} if the command executed successfully.
+     * @throws ExecutionError If an error occurs during execution.
+     */
     @Override
     public boolean apply(String[] args) throws ExecutionError {
         String collectionType = collectionManager.getCollection().getClass().getSimpleName();

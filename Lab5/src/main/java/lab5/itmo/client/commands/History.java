@@ -7,16 +7,32 @@ import lab5.itmo.client.CommandManager;
 import java.io.IOException;
 import java.util.List;
 
-public class History extends Command{
+/**
+ * A command that prints the last 13 executed commands.
+ */
+public class History extends Command {
     private final Console console;
     private CommandManager commandManager;
 
-    public History(Console console, CommandManager commandManager){
+    /**
+     * Constructs a {@code History} command.
+     *
+     * @param console        The console used for input and output.
+     * @param commandManager The command manager providing the command history.
+     */
+    public History(Console console, CommandManager commandManager) {
         super("history", "print the last 13 commands");
         this.commandManager = commandManager;
         this.console = console;
     }
 
+    /**
+     * Executes the command by printing the last 13 executed commands.
+     *
+     * @param args The arguments passed to the command (not used).
+     * @return {@code true} if the command executed successfully.
+     * @throws ExecutionError If an error occurs during execution.
+     */
     @Override
     public boolean apply(String[] args) throws ExecutionError {
         List<Command> commandHistory = commandManager.getHistory();

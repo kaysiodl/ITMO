@@ -17,7 +17,7 @@ import lab5.itmo.collection.models.Person;
 
 public class DumpManager implements IOHandler<JsonElement> {
 
-    protected Path path = Path.of(System.getProperty("filePath", "data.json"));
+    protected Path path = Path.of("data.json");
 
     Gson gson = new GsonBuilder()
             .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
@@ -91,6 +91,7 @@ public class DumpManager implements IOHandler<JsonElement> {
             return null;
         }
     }
+
 
     /**
      * Writes collection to a file
