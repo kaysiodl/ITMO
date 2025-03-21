@@ -1,6 +1,6 @@
 [
   {
-    "id": 2,
+    "id": 1,
     "name": "person_22231",
     "coordinates": {
       "x": 21743,
@@ -14,10 +14,10 @@
           "day": 21
         },
         "time": {
-          "hour": 14,
-          "minute": 24,
-          "second": 59,
-          "nano": 229642100
+          "hour": 21,
+          "minute": 45,
+          "second": 21,
+          "nano": 596004500
         }
       },
       "offset": {
@@ -39,11 +39,11 @@
     }
   },
   {
-    "id": 1,
-    "name": "updated_person",
+    "id": 2,
+    "name": "person_26730",
     "coordinates": {
-      "x": 34,
-      "y": 35
+      "x": 26730,
+      "y": 26730
     },
     "creationDate": {
       "dateTime": {
@@ -53,10 +53,10 @@
           "day": 21
         },
         "time": {
-          "hour": 14,
-          "minute": 25,
-          "second": 39,
-          "nano": 577559500
+          "hour": 21,
+          "minute": 45,
+          "second": 30,
+          "nano": 407909600
         }
       },
       "offset": {
@@ -66,54 +66,15 @@
         "id": "Europe/Moscow"
       }
     },
-    "height": 55.0,
-    "eyeColor": "BLUE",
-    "hairColor": "BLUE",
-    "nationality": "SPAIN",
-    "location": {
-      "x": 9393.0,
-      "y": 93939,
-      "z": 9876,
-      "name": "aaaa"
-    }
-  },
-  {
-    "id": 10,
-    "name": "malina",
-    "coordinates": {
-      "x": 52,
-      "y": 52
-    },
-    "creationDate": {
-      "dateTime": {
-        "date": {
-          "year": 2025,
-          "month": 3,
-          "day": 21
-        },
-        "time": {
-          "hour": 14,
-          "minute": 25,
-          "second": 39,
-          "nano": 579026300
-        }
-      },
-      "offset": {
-        "totalSeconds": 10800
-      },
-      "zone": {
-        "id": "Europe/Moscow"
-      }
-    },
-    "height": 52.0,
+    "height": 26730.0,
     "eyeColor": "BLUE",
     "hairColor": "WHITE",
     "nationality": "FRANCE",
     "location": {
-      "x": 44493.0,
-      "y": 443939,
-      "z": 4476,
-      "name": "Saint-Petersburg"
+      "x": 26730.0,
+      "y": 26730,
+      "z": 26730,
+      "name": "location_26730"
     }
   }
 ]

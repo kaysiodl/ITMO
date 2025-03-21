@@ -2,6 +2,7 @@ package lab5.itmo.collection.managers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lab5.itmo.client.io.utility.ZonedDateTimeAdapter;
 import lab5.itmo.collection.models.Person;
 
 import java.io.FileWriter;
@@ -57,7 +58,10 @@ public class CollectionManager {
             return;
         }
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
+                .setPrettyPrinting()
+                .create();
 
         String jsonCollection = gson.toJson(collection.values());
 
