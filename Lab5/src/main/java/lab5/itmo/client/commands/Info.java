@@ -1,8 +1,8 @@
 package lab5.itmo.client.commands;
 
-import lab5.itmo.exceptions.ExecutionError;
 import lab5.itmo.client.io.console.Console;
 import lab5.itmo.collection.managers.CollectionManager;
+import lab5.itmo.exceptions.ExecutionError;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 public class Info extends Command {
     private final Console console;
-    private CollectionManager collectionManager = new CollectionManager();
+    private CollectionManager collectionManager;
 
     /**
      * Constructs an {@code Info} command.

@@ -30,17 +30,17 @@ public class ReplaceIfGreater extends Command{
 
             Person old = collectionManager.getById(id);
             if (old == null){
-                collectionManager.add(AskManager.askPerson(console, id));
+                collectionManager.add(AskManager.askPerson(console));
             }
             else{
                 try {
                     console.print("Create new person: \n");
-                    Person person = AskManager.askPerson(console, old.getId());
+                    Person person = AskManager.askPerson(console);
                     if (person != null) {
                         person.validate();
                         if (person.getSumCoordinates() > old.getSumCoordinates()){
                             collectionManager.removeById(old.getId());
-                            collectionManager.add(person);
+                            collectionManager.add(person, old.getId());
                             collectionManager.sort();
                         }
                     }

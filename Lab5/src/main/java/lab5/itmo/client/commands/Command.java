@@ -3,7 +3,6 @@ package lab5.itmo.client.commands;
 import lab5.itmo.exceptions.ExecutionError;
 import lab5.itmo.exceptions.NullFieldException;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -47,7 +46,7 @@ public abstract class Command {
      *
      * @param args The arguments passed to the command.
      * @return {@code true} if the command executed successfully.
-     * @throws ExecutionError   If an error occurs during execution.
+     * @throws ExecutionError     If an error occurs during execution.
      * @throws NullFieldException If a required field is null.
      */
     public abstract boolean apply(String[] args) throws ExecutionError, NullFieldException;

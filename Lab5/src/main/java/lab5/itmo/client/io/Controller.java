@@ -67,8 +67,15 @@ public class Controller {
         }
     }
 
+    public void runScript(List<String> lines, String scriptName){
+        for (String line : lines) {
+            console.println("Введите команду: " + line.trim());
+            console.println(handleInput(line.trim()));
+        }
+    }
+
     private boolean parseInput(String input) throws ExecutionError, NotFoundCommandException {
-        String[] data = input.split(" ");
+        String[] data = input.split("\\s+");
         String commandName = data[0];
 
         Command command = commandManager.getCommand(commandName);

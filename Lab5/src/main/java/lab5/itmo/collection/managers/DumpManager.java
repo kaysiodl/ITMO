@@ -1,7 +1,11 @@
 package lab5.itmo.collection.managers;
 
+import com.google.gson.*;
+import lab5.itmo.client.io.utility.IOHandler;
+import lab5.itmo.client.io.utility.ZonedDateTimeAdapter;
+import lab5.itmo.collection.models.Person;
+
 import java.io.*;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.ZoneId;
@@ -9,15 +13,9 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.*;
-
-import lab5.itmo.client.io.utility.IOHandler;
-import lab5.itmo.client.io.utility.ZonedDateTimeAdapter;
-import lab5.itmo.collection.models.Person;
-
 public class DumpManager implements IOHandler<JsonElement> {
 
-    protected Path path = Path.of("data.json");
+    protected Path path;
 
     Gson gson = new GsonBuilder()
             .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
@@ -29,6 +27,9 @@ public class DumpManager implements IOHandler<JsonElement> {
 
     protected BufferedWriter writer;
 
+    public DumpManager(Path path){
+        this.path = path;
+    }
 
     /**
      * Converts file json into a list of Person type
@@ -37,25 +38,34 @@ public class DumpManager implements IOHandler<JsonElement> {
      * @throws IOException
      */
     public List<Person> jsonFileToList() throws IOException {
-        JsonElement jsonElement;
-        List<Person> personList = new ArrayList<>();
+        try {
+            JsonElement jsonElement;
+            List<Person> personList = new ArrayList<>();
 
-        jsonElement = this.read();
+            jsonElement = this.read();
 
-        if (jsonElement.isJsonArray()) {
-            JsonArray jsonArray = jsonElement.getAsJsonArray();
-            for (JsonElement element : jsonArray.asList()) {
-                Person person = gson.fromJson(element, Person.class);
+            if (jsonElement == null || jsonElement.isJsonNull()) {
+                throw new NullPointerException("File is empty or contains uncorrected data.");
+            }
+
+            if (jsonElement.isJsonArray()) {
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
+                for (JsonElement element : jsonArray.asList()) {
+                    Person person = gson.fromJson(element, Person.class);
+                    if (person.getCreationDate() == null)
+                        person.setCreationDate(ZonedDateTime.now(ZoneId.systemDefault()));
+                    personList.add(person);
+                }
+            } else {
+                Person person = gson.fromJson(jsonElement, Person.class);
                 if (person.getCreationDate() == null) person.setCreationDate(ZonedDateTime.now(ZoneId.systemDefault()));
                 personList.add(person);
             }
-        } else {
-            Person person = gson.fromJson(jsonElement, Person.class);
-            if (person.getCreationDate() == null) person.setCreationDate(ZonedDateTime.now(ZoneId.systemDefault()));
-            personList.add(person);
-        }
 
-        return personList;
+            return personList;
+        } catch (Exception e) {
+            throw new NullPointerException("Failed loading collection from file: " + e.getMessage());
+        }
     }
 
     /**
@@ -87,8 +97,7 @@ public class DumpManager implements IOHandler<JsonElement> {
         try {
             return JsonParser.parseString(jsonString);
         } catch (JsonSyntaxException e) {
-            System.err.println("Invalid json syntax in file: " + path);
-            return null;
+            throw new RuntimeException("data in file is not correct");
         }
     }
 
@@ -124,7 +133,6 @@ public class DumpManager implements IOHandler<JsonElement> {
 
     @Override
     public void close() throws IOException {
-        reader.close();
         writer.close();
     }
 }

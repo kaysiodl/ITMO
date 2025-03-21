@@ -4,6 +4,7 @@ import lab5.itmo.client.io.console.Console;
 import lab5.itmo.collection.models.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class AskManager {
@@ -11,30 +12,27 @@ public class AskManager {
     public static class Break extends Exception {
     }
 
-
-    public static Person askPerson(Console console) throws Break {
+    public static Person personFromScript(String[] data) {
         try {
-            String name;
-            while (true) {
-                console.print("name: ");
-                name = console.read().trim();
-                if (name.equals("exit")) throw new Break();
-                if (!name.isEmpty()) break;
-            }
-            Coordinates coordinates = askCoordinates(console);
-            float height = askHeight(console);
-            Color eyeColor = askEyeColor(console);
-            Color hairColor = askHairColor(console);
-            Country nationality = askCountry(console);
-            Location location = askLocation(console);
-            return new Person(name, coordinates, height, eyeColor, hairColor, nationality, location);
-        } catch (NoSuchElementException | IllegalStateException e) {
-            console.printError("Failed reading data.");
-            return null;
+            String name = data[0];
+            Coordinates coordinates = new Coordinates(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+            float height = Float.parseFloat(data[3]);
+            Color eyeColor = Color.valueOf(data[4].toUpperCase());
+            Color hairColor = Color.valueOf(data[5].toUpperCase());
+            Country nationality = Country.valueOf(data[6].toUpperCase());
+            Location location = new Location(Float.parseFloat(data[7]),
+                    Long.parseLong(data[8]),
+                    Long.parseLong(data[9]),
+                    data[10]);
+            coordinates.validate();
+            Person person = new Person(name, coordinates, height, eyeColor,hairColor, nationality, location);
+            return person;
+        }catch (IllegalStateException e){
+            throw new IllegalArgumentException("Failed reading data, " + e.getMessage());
         }
     }
 
-    public static Person askPerson(Console console, Integer id) throws Break {
+    public static Person askPerson(Console console) throws Break {
         try {
             String name;
             while (true) {

@@ -3,7 +3,6 @@ package lab5.itmo.client.io.utility;
 import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 
 public class ZonedDateTimeAdapter implements JsonSerializer<ZonedDateTime>, JsonDeserializer<ZonedDateTime> {
 

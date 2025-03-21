@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Show extends Command{
     private final Console console;
-    private CollectionManager collectionManager = new CollectionManager();
+    private CollectionManager collectionManager;
 
     public Show(Console console, CollectionManager collectionManager){
         super("show", "output all the elements of the collection in a string representation");

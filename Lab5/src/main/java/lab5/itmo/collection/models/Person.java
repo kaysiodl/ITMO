@@ -1,6 +1,5 @@
 package lab5.itmo.collection.models;
 
-import lab5.itmo.exceptions.NullFieldException;
 import lab5.itmo.client.io.utility.Element;
 import lab5.itmo.client.io.utility.Validatable;
 
@@ -26,7 +25,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
 
     public Person(String name, Coordinates coordinates,
                   float height, Color eyeColor, Color hairColor,
-                  Country nationality, Location location){
+                  Country nationality, Location location) {
         this.id = idCounter++;
         this.name = name;
         this.height = height;
@@ -44,7 +43,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
         return id;
     }
 
-    public void setId(Integer id){
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,7 +51,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
         this.creationDate = creationDate;
     }
 
-    public ZonedDateTime getCreationDate(){
+    public ZonedDateTime getCreationDate() {
         creationDate = ZonedDateTime.now(ZoneId.systemDefault());
         return creationDate;
     }
@@ -95,10 +94,13 @@ public class Person extends Element implements Validatable, Comparable<Element> 
     }
     //getters
 
-    public int getSumCoordinates(){return coordinates.sumCoordinates(); }
+    public int getSumCoordinates() {
+        return coordinates.sumCoordinates();
+    }
+
     @Override
-    public void validate() throws IllegalArgumentException{
-        if (id<=0 || id == null) throw new IllegalArgumentException("Your id can't be lower than 0");
+    public void validate() throws IllegalArgumentException {
+        if (id <= 0 || id == null) throw new IllegalArgumentException("Your id can't be lower than 0");
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name can't be null or empty");
         if (coordinates == null) throw new IllegalArgumentException("Coordinates can't be null. Please try again.");
         if (height <= 0) throw new IllegalArgumentException("Height must be greater than 0. Please try again.");
@@ -108,7 +110,7 @@ public class Person extends Element implements Validatable, Comparable<Element> 
 
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
@@ -116,14 +118,15 @@ public class Person extends Element implements Validatable, Comparable<Element> 
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(name, coordinates, creationDate, height, eyeColor, hairColor, nationality, location);
     }
-            
+
     @Override
     public String toString() {
         return "Person {" +
-                "\n  name = '" + name + '\'' +
+                " \n  id = " + id +
+                ",\n  name = '" + name + '\'' +
                 ",\n  coordinates = " + coordinates +
                 ",\n  creationDate = " + creationDate +
                 ",\n  height = " + height +

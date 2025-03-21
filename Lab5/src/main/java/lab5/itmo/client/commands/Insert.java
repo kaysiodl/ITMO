@@ -1,6 +1,5 @@
 package lab5.itmo.client.commands;
 
-import lab5.itmo.client.io.console.Console;
 import lab5.itmo.client.io.console.StandartConsole;
 import lab5.itmo.collection.managers.AskManager;
 import lab5.itmo.collection.managers.CollectionManager;
@@ -8,73 +7,53 @@ import lab5.itmo.collection.models.Person;
 import lab5.itmo.exceptions.ExecutionError;
 import lab5.itmo.exceptions.NullFieldException;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.Arrays;
 
 public class Insert extends Command {
     private final StandartConsole console;
     private final CollectionManager collectionManager;
-    private final AskManager askManager;
 
-    public Insert(StandartConsole console, CollectionManager collectionManager, AskManager askManager) {
+    public Insert(StandartConsole console, CollectionManager collectionManager) {
         super("insert", "add a new item with the specified key");
         this.console = console;
         this.collectionManager = collectionManager;
-        this.askManager = askManager;
     }
 
     @Override
     public boolean apply(String[] args) throws ExecutionError, NullFieldException {
+
+        Integer key;
         try {
-            if (args.length != 1) {
-                throw new ExecutionError("This command accepts one argument.");
-            }
+            key = Integer.parseInt(args[0].trim());
+        } catch (NumberFormatException e) {
+            console.printError("Key must be a valid integer.");
+            return false;
+        }
 
-            Integer key;
-            try {
-                key = Integer.parseInt(args[0].trim());
-            } catch (NumberFormatException e) {
-                console.printError("Key must be a valid integer.");
-                return false;
-            }
+        if (collectionManager.getCollection().containsKey(key)) {
+            console.printError("An element with this key already exists.");
+            return false;
+        }
 
-            if (collectionManager.getCollection().containsKey(key)) {
-                console.printError("An element with this key already exists.");
-                return false;
-            }
-
+        try {
             if (console.isScriptExecutionMode()) {
-                List<String> scriptData = console.getScriptData();
-                scriptData.removeFirst();
-                if (scriptData.size() < 11) {
-                    throw new ExecutionError("Not enough data in script for 'insert' command.");
-                }
-
-                console.setScript(scriptData);
-
-                Person newPerson = AskManager.askPerson(console);
-                if (newPerson == null) {
-                    console.printError("Failed to create a new Person from script data.");
-                    return false;
-                }
-
-
-                collectionManager.add(newPerson, key);
-                console.println("New element added successfully with key: " + key);
+                String[] data = Arrays.copyOfRange(args, 1, args.length);
+                Person person = AskManager.personFromScript(data);
+                person.validate();
+                collectionManager.add(person, key);
             } else {
-                Person newPerson = AskManager.askPerson(console);
-                if (newPerson == null) {
-                    console.printError("Failed to create a new Person.");
-                    return false;
+                Person person = AskManager.askPerson(console);
+                if (person != null) {
+                    collectionManager.add(person, key);
                 }
-
-                collectionManager.add(newPerson, key);
-                console.println("New element added successfully with key: " + key);
             }
 
-            return true;
+        } catch (ExecutionError e) {
+            throw new ExecutionError(e.getMessage());
         } catch (AskManager.Break e) {
             throw new RuntimeException(e);
         }
+        return true;
+
     }
 }

@@ -89,22 +89,8 @@ public class ExecuteScript extends Command {
         console.setScriptExecutionMode(true);
 
         try {
-            for (int i = 0; i < scriptLines.size(); i++) {
-                String line = scriptLines.get(i).trim();
-                if (!line.trim().isEmpty()) {
-                    String[] data = line.split(" ");
-                    if (data[0].equals("insert") || data[0].equals("update")) {
-                        console.println("Executing: " + line);
-                        String result = controller.handleInput(line);
-                        console.println(result);
-                        i += 11;
-                    } else {
-                        console.println("Executing: " + line);
-                        String result = controller.handleInput(line);
-                        console.println(result);
-                    }
-                }
-            }
+            console.println("Executing: " + filePath);
+            controller.runScript(scriptLines, filePath);
         } catch (Exception e) {
             throw new ExecutionError(e.getMessage());
         } finally {

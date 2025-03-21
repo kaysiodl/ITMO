@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class RemoveGreater extends Command {
     private final Console console;
-    private CollectionManager collectionManager = new CollectionManager();
+    private CollectionManager collectionManager;
 
     public RemoveGreater(Console console, CollectionManager collectionManager) {
         super("remove_greater", "delete all items from the collection that exceed the specified item");

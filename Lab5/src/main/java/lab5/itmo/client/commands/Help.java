@@ -1,8 +1,8 @@
 package lab5.itmo.client.commands;
 
-import lab5.itmo.exceptions.ExecutionError;
-import lab5.itmo.client.io.console.Console;
 import lab5.itmo.client.CommandManager;
+import lab5.itmo.client.io.console.Console;
+import lab5.itmo.exceptions.ExecutionError;
 
 import java.io.IOException;
 import java.util.List;

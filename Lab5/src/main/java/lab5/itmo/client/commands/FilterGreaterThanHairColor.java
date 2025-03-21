@@ -2,8 +2,8 @@ package lab5.itmo.client.commands;
 
 import lab5.itmo.client.io.console.Console;
 import lab5.itmo.collection.managers.CollectionManager;
-import lab5.itmo.collection.models.Person;
 import lab5.itmo.collection.models.Color;
+import lab5.itmo.collection.models.Person;
 import lab5.itmo.exceptions.ExecutionError;
 
 import java.io.IOException;

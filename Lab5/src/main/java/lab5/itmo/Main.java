@@ -4,32 +4,23 @@ import lab5.itmo.client.CommandManager;
 import lab5.itmo.client.commands.*;
 import lab5.itmo.client.io.Controller;
 import lab5.itmo.client.io.console.StandartConsole;
-import lab5.itmo.collection.managers.AskManager;
 import lab5.itmo.collection.managers.CollectionManager;
-import lab5.itmo.collection.managers.DumpManager;
-import lab5.itmo.collection.models.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
-
-import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) {
         try {
             StandartConsole console = new StandartConsole();
-
+            Path collectionPath = Path.of(System.getProperty("collection", args[0].trim()));
             CommandManager commandManager = new CommandManager();
-            AskManager askManager = new AskManager();
-            CollectionManager collectionManager = new CollectionManager();
+            CollectionManager collectionManager = new CollectionManager(collectionPath);
 
             try {
                 collectionManager.loadCollection();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (RuntimeException e) {
-                throw new RuntimeException(e);
+            } catch (NullPointerException e) {
+                console.printError(e.getMessage());
+                console.println("Continuing with empty collection.");
             }
 
             Controller controller = new Controller(commandManager, console);
@@ -41,7 +32,7 @@ public class Main {
             commandManager.register(new Exit());
             commandManager.register(new History(console, commandManager));
             commandManager.register(new UpdateId(console, collectionManager));
-            commandManager.register(new Insert(console, collectionManager, askManager));
+            commandManager.register(new Insert(console, collectionManager));
             commandManager.register(new RemoveKey(console, collectionManager));
             commandManager.register(new Info(console, collectionManager));
             commandManager.register(new RemoveGreater(console, collectionManager));
@@ -53,7 +44,7 @@ public class Main {
 
             controller.run();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
