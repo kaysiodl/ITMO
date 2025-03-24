@@ -1,5 +1,5 @@
 help
 info
-show
-update 1 updated_person 34 35 55 blue blue spain 9393 93939 9876 aaaa
+       show
+update      1 updated_person 34 35 55 blue blue spain 9393 93939 9876 aaaa
 insert 10 malina 52 52 52 blue white france 44493 443939 4476 Saint-Petersburg

@@ -34,10 +34,9 @@ public class DumpManager implements IOHandler<JsonElement> {
     /**
      * Converts file json into a list of Person type
      *
-     * @return
-     * @throws IOException
+     * @return list of person
      */
-    public List<Person> jsonFileToList() throws IOException {
+    public List<Person> jsonFileToList(){
         try {
             JsonElement jsonElement;
             List<Person> personList = new ArrayList<>();
@@ -71,7 +70,7 @@ public class DumpManager implements IOHandler<JsonElement> {
     /**
      * Reads collection from file
      *
-     * @return
+     * @return JsonObject
      */
 
     @Override
@@ -105,7 +104,6 @@ public class DumpManager implements IOHandler<JsonElement> {
     /**
      * Writes collection to a file
      *
-     * @param collection
      */
     @Override
     public void write(String collection) throws IOException {

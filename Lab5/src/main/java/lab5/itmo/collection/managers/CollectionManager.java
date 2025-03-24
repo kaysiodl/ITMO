@@ -14,9 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 public class CollectionManager {
-    private Map<Integer, Person> collection = new LinkedHashMap<Integer, Person>();
-
-    private LocalDateTime lastSaveTime;
+    private final Map<Integer, Person> collection = new LinkedHashMap<>();
 
     private LocalDateTime lastInitTime;
 
@@ -71,7 +69,6 @@ public class CollectionManager {
             System.err.printf("Failed when trying to write to %s: %s%n", path.getFileName(), e.getMessage());
             throw e;
         }
-        lastSaveTime = LocalDateTime.now();
     }
 
     public void loadCollection() throws NullPointerException {
@@ -98,11 +95,12 @@ public class CollectionManager {
                                 .max(Integer::compareTo)
                                 .orElse(0) + 1;
                         person1.setId(id);
+                        this.add(person1, person1.getId());
                         saveCollection();
                         System.out.println("id of every person must be unique");
                     }
                 }
-                this.add(person);
+                this.add(person, person.getId());
             }
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
@@ -131,12 +129,8 @@ public class CollectionManager {
         return true;
     }
 
-    public Map getCollection() {
+    public Map<Integer, Person> getCollection() {
         return collection;
-    }
-
-    public LocalDateTime getLastSaveTime() {
-        return lastSaveTime;
     }
 
     public LocalDateTime getLastInitTime() {

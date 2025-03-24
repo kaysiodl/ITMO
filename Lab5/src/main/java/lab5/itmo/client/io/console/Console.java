@@ -1,7 +1,6 @@
 package lab5.itmo.client.io.console;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * An interface for console interaction, providing methods for printing and reading input.

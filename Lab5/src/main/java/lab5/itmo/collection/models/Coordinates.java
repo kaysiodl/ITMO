@@ -1,9 +1,9 @@
 package lab5.itmo.collection.models;
 
 public class Coordinates{
-    private int x; //Значение поля должно быть больше -517
+    private final int x; //Значение поля должно быть больше -517
 
-    private int y; //Значение поля должно быть больше -652
+    private final int y; //Значение поля должно быть больше -652
 
     public Coordinates(int x, int y){
         this.x = x;

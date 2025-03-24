@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
-    private List<Command> commands = new ArrayList<>();
-    private List<Command> commandHistory = new ArrayList<>();
+    private final List<Command> commands = new ArrayList<>();
+    private final List<Command> commandHistory = new ArrayList<>();
 
     public void register(Command command){
         commands.add(command);

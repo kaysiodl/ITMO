@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Help extends Command {
     private final Console console;
-    private CommandManager commandManager = new CommandManager();
+    private final CommandManager commandManager;
 
     /**
      * Constructs a {@code Help} command.

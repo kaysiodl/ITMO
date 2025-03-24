@@ -2,14 +2,12 @@ package lab5.itmo.client.commands;
 
 import lab5.itmo.client.io.console.Console;
 import lab5.itmo.collection.managers.CollectionManager;
-import lab5.itmo.collection.models.Person;
 import lab5.itmo.exceptions.ExecutionError;
 
-import java.io.IOException;
 
 public class RemoveKey extends Command {
     private final Console console;
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public RemoveKey(Console console, CollectionManager collectionManager) {
         super("remove_key", "delete an item from the collection by its key");

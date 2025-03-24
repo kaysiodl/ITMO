@@ -21,9 +21,11 @@ public class UpdateId extends Command {
 
     @Override
     public boolean apply(String[] args) throws ExecutionError {
-        if (args[0].isEmpty())
-            console.printError("Incorrect number of arguments");
-        Integer id = -1;
+        if (args.length == 0) {
+            console.printError("Incorrect number of arguments: id is required.");
+            return false;
+        }
+        int id = -1;
         try {
             id = Integer.parseInt(args[0].trim());
         } catch (NumberFormatException e) {
@@ -32,7 +34,7 @@ public class UpdateId extends Command {
 
         Person old = collectionManager.getById(id);
         if (old == null || !collectionManager.getCollection().containsValue(old)) {
-            console.printError("Id doesn't exist.");
+            throw new NullPointerException("Nothing to update.");
         }
         try {
             if (console.isScriptExecutionMode()) {
@@ -54,6 +56,10 @@ public class UpdateId extends Command {
             }
         } catch (AskManager.Break e) {
             console.printError("The fields of the person are not valid!");
+            return false;
+        }catch (Exception e){
+            console.printError("Error: "  + e.getMessage());
+            return false;
         }
         return true;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Show extends Command{
     private final Console console;
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public Show(Console console, CollectionManager collectionManager){
         super("show", "output all the elements of the collection in a string representation");
@@ -35,7 +35,7 @@ public class Show extends Command{
         try {
             StringBuilder output = new StringBuilder();
             for (Integer key : sortedKeys) {
-                Person person = (Person) collectionManager.getCollection().get(key);
+                Person person = collectionManager.getCollection().get(key);
                 output.append(person).append("\n");
             }
             console.println(output.toString());

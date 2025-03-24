@@ -8,7 +8,7 @@ import lab5.itmo.exceptions.ExecutionError;
  * A command that clears the collection.
  */
 public class Clear extends Command {
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Constructs a {@code Clear} command.

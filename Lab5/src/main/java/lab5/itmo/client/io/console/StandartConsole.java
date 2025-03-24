@@ -1,6 +1,5 @@
 package lab5.itmo.client.io.console;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -12,8 +11,8 @@ import java.util.Scanner;
  */
 public class StandartConsole implements Console {
     private boolean scriptExecutionMode = false;
-    private static Scanner scanner = new Scanner(System.in);
-    private List<String> script = new ArrayList<>();
+    private static final Scanner scanner = new Scanner(System.in);
+    private final List<String> script = new ArrayList<>();
 
     /**
      * Sets the script execution mode.
@@ -84,8 +83,8 @@ public class StandartConsole implements Console {
             return scanner.nextLine();
         } else {
             if (script.size() == 1) setScriptExecutionMode(false);
-            String line = script.getFirst();
-            script.removeFirst();
+            String line = script.get(0);
+            script.remove(0);
             println(line);
             return line;
         }

@@ -14,7 +14,7 @@ import java.util.List;
 public class Controller {
     private final StandartConsole console;
     private final CommandManager commandManager;
-    private List<String> launchedScripts = new ArrayList<>();
+    private final List<String> launchedScripts = new ArrayList<>();
 
     public Controller(CommandManager commandManager, StandartConsole console) {
         this.console = console;
@@ -42,9 +42,10 @@ public class Controller {
         try {
             while (true) {
                 console.print("Enter the command: ");
-                input = console.read();
-                if (input == null) {
-                    break;
+                input = console.read().trim();
+                if (input.isEmpty()) {
+                    console.println("Error: Command name can't be empty.");
+                    continue;
                 }
                 try {
                     String result = handleInput(input);
@@ -58,36 +59,42 @@ public class Controller {
         }
     }
 
-    public String handleInput(String input){
+    public String handleInput(String input) {
         try {
             boolean isSuccess = parseInput(input);
             return input + (isSuccess ? " successfully" : " unsuccessfully") + " completed";
         } catch (ExecutionError e) {
             return "Execution error: " + e.getMessage();
+        } catch (NullPointerException e) {
+            return "Error: " + e.getMessage();
         }
     }
 
-    public void runScript(List<String> lines, String scriptName){
+    public void runScript(List<String> lines, String scriptName) {
         for (String line : lines) {
-            console.println("Введите команду: " + line.trim());
+            console.println("Enter the command: " + line.trim());
             console.println(handleInput(line.trim()));
         }
     }
 
     private boolean parseInput(String input) throws ExecutionError, NotFoundCommandException {
-        String[] data = input.split("\\s+");
-        String commandName = data[0];
+        if (input == null || input.trim().isEmpty()) {
+            throw new NotFoundCommandException("Command name can't be empty.");
+        }
 
+        String[] data = input.trim().split("\\s+");
+        String commandName = data[0];
         Command command = commandManager.getCommand(commandName);
         if (command == null) {
-            throw new NotFoundCommandException("Command '" + commandName + "' is not found.");
+            throw new NullPointerException("Command '" + commandName + "' is not found.");
         }
         commandManager.addToHistory(command);
         String[] args = data.length > 1 ? Arrays.copyOfRange(data, 1, data.length) : new String[0];
         try {
             return command.apply(args);
         } catch (NullFieldException e) {
-            throw new ExecutionError(e.getMessage());
+            console.printError(e.getMessage());
+            return false;
         }
     }
 }

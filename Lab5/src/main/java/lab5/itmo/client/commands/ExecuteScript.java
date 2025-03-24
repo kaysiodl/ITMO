@@ -8,7 +8,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A command that reads and executes a script from a file.
@@ -84,7 +86,9 @@ public class ExecuteScript extends Command {
         }
 
         controller.addLaunchedScript(filePath);
-        List<String> scriptLines = List.of(script.split("\n"));
+        List<String> scriptLines = Arrays.stream(script.split("\n"))
+                .map(line -> line.trim().replaceAll("\\s+", " ")) // Удаляем пробелы по бокам и внутри
+                .collect(Collectors.toList());
         console.setScript(scriptLines);
         console.setScriptExecutionMode(true);
 

@@ -6,14 +6,12 @@ import lab5.itmo.collection.models.Person;
 import lab5.itmo.exceptions.ExecutionError;
 import lab5.itmo.exceptions.NullFieldException;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RemoveGreater extends Command {
     private final Console console;
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public RemoveGreater(Console console, CollectionManager collectionManager) {
         super("remove_greater", "delete all items from the collection that exceed the specified item");
@@ -39,9 +37,10 @@ public class RemoveGreater extends Command {
             throw new NullFieldException("Id can't be null.");
         }
 
-        Map persons = collectionManager.getCollection();
+        Map<Integer, Person> persons = collectionManager.getCollection();
         if (persons == null || persons.isEmpty()) {
             console.print("No persons to compare.\n");
+            return false;
         }
         List<Integer> personList = collectionManager.sort();
         try{

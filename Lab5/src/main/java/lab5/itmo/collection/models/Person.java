@@ -12,14 +12,14 @@ import java.util.Objects;
  */
 public class Person extends Element implements Validatable, Comparable<Element> {
     private Integer id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
+    private final String name; //Поле не может быть null, Строка не может быть пустой
+    private final Coordinates coordinates; //Поле не может быть null
     private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private float height; //Значение поля должно быть больше 0
-    private Color eyeColor; //Поле может быть null
-    private Color hairColor; //Поле не может быть null
-    private Country nationality; //Поле может быть null
-    private Location location; //Поле не может быть null
+    private final float height; //Значение поля должно быть больше 0
+    private final Color eyeColor; //Поле может быть null
+    private final Color hairColor; //Поле не может быть null
+    private final Country nationality; //Поле может быть null
+    private final Location location; //Поле не может быть null
 
     private static int idCounter = 1;
 
@@ -64,15 +64,6 @@ public class Person extends Element implements Validatable, Comparable<Element> 
         return this.getId().compareTo(o.getId());
     }
 
-    //getters
-    public String getName() {
-        return name;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
     public Country getNationality() {
         return nationality;
     }
@@ -81,26 +72,13 @@ public class Person extends Element implements Validatable, Comparable<Element> 
         return hairColor;
     }
 
-    public Color getEyeColor() {
-        return eyeColor;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-    //getters
-
     public int getSumCoordinates() {
         return coordinates.sumCoordinates();
     }
 
     @Override
     public void validate() throws IllegalArgumentException {
-        if (id <= 0 || id == null) throw new IllegalArgumentException("Your id can't be lower than 0");
+        if (id <= 0) throw new IllegalArgumentException("Your id can't be lower than 0");
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name can't be null or empty");
         if (coordinates == null) throw new IllegalArgumentException("Coordinates can't be null. Please try again.");
         if (height <= 0) throw new IllegalArgumentException("Height must be greater than 0. Please try again.");

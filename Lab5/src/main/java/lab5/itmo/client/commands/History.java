@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class History extends Command {
     private final Console console;
-    private CommandManager commandManager;
+    private final CommandManager commandManager;
 
     /**
      * Constructs a {@code History} command.

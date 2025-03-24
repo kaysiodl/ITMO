@@ -49,13 +49,13 @@ public class AddRandom extends Command {
     public boolean apply(String[] args) throws ExecutionError {
         try {
             Person person = new Person(
-                    "person_" + String.valueOf(getRandom()),
-                    new Coordinates((int) getRandom(), (int) getRandom()),
+                    "person_" + getRandom(),
+                    new Coordinates(getRandom(), getRandom()),
                     (float) getRandom(),
                     Color.BLUE,
                     Color.WHITE,
                     Country.FRANCE,
-                    new Location((float) getRandom(), (long) getRandom(), (long) getRandom(), "location_" + String.valueOf(getRandom())));
+                    new Location((float) getRandom(), (long) getRandom(), (long) getRandom(), "location_" + getRandom()));
             collectionManager.add(person);
             console.print("Random person has been added.\n");
         } catch (ExecutionError e) {

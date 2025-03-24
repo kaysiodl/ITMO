@@ -28,7 +28,7 @@ public class Main {
             commandManager.register(new Help(console, commandManager));
             commandManager.register(new Show(console, collectionManager));
             commandManager.register(new Clear(console, collectionManager));
-            commandManager.register(new Save(console, collectionManager));
+            commandManager.register(new Save(collectionManager));
             commandManager.register(new Exit());
             commandManager.register(new History(console, commandManager));
             commandManager.register(new UpdateId(console, collectionManager));
@@ -43,9 +43,10 @@ public class Main {
             commandManager.register(new FilterGreaterThanHairColor(console, collectionManager));
 
             controller.run();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error: " + "file name is empty. Try again with file name.");
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

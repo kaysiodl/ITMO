@@ -21,7 +21,10 @@ public class Insert extends Command {
 
     @Override
     public boolean apply(String[] args) throws ExecutionError, NullFieldException {
-
+        if (args.length == 0) {
+            console.printError("Incorrect number of arguments: id is required.");
+            return false;
+        }
         Integer key;
         try {
             key = Integer.parseInt(args[0].trim());

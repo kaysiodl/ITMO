@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 public class Info extends Command {
     private final Console console;
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     /**
      * Constructs an {@code Info} command.
@@ -40,10 +40,12 @@ public class Info extends Command {
         int collectionSize = collectionManager.getCollection().size();
 
         String info = String.format(
-                "Collection information:\n" +
-                        "  Type: %s\n" +
-                        "  Initialization date: %s\n" +
-                        "  Number of elements: %d\n",
+                """
+                        Collection information:
+                          Type: %s
+                          Initialization date: %s
+                          Number of elements: %d
+                        """,
                 collectionType, lastInitTime, collectionSize
         );
 

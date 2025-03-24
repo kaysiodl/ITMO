@@ -6,7 +6,7 @@ import lab5.itmo.collection.managers.CollectionManager;
 import lab5.itmo.collection.models.Person;
 import lab5.itmo.exceptions.ExecutionError;
 
-public class ReplaceIfGreater extends Command{
+public class ReplaceIfGreater extends Command {
     private final Console console;
     private final CollectionManager collectionManager;
 
@@ -21,35 +21,34 @@ public class ReplaceIfGreater extends Command{
         try {
             if (args[0].isEmpty())
                 console.printError("Incorrect number of arguments");
-            Integer id = -1;
+            int id = -1;
             try {
                 id = Integer.parseInt(args[0].trim());
             } catch (NumberFormatException e) {
                 console.printError("Id has not correct format.");
             }
-
             Person old = collectionManager.getById(id);
             if (old == null){
-                collectionManager.add(AskManager.askPerson(console));
+                throw new NullPointerException();
             }
-            else{
-                try {
-                    console.print("Create new person: \n");
-                    Person person = AskManager.askPerson(console);
-                    if (person != null) {
-                        person.validate();
-                        if (person.getSumCoordinates() > old.getSumCoordinates()){
-                            collectionManager.removeById(old.getId());
-                            collectionManager.add(person, old.getId());
-                            collectionManager.sort();
-                        }
+            try {
+                console.print("Create new person: \n");
+                Person person = AskManager.askPerson(console);
+                if (person != null) {
+                    person.validate();
+                    if (person.getSumCoordinates() > old.getSumCoordinates()) {
+                        collectionManager.removeById(old.getId());
+                        collectionManager.add(person, old.getId());
+                        collectionManager.sort();
                     }
-                } catch (ExecutionError e) {
-                    console.printError("the fields of the person are not valid!");
                 }
+            } catch (ExecutionError e) {
+                console.printError("the fields of the person are not valid!");
             }
         } catch (AskManager.Break e) {
             console.printError("the fields of the person are not valid!");
+        } catch(NullPointerException e){
+            throw new NullPointerException("Nothing to update.");
         }
         return true;
     }
