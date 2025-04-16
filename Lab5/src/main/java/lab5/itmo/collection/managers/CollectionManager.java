@@ -15,7 +15,7 @@ import java.util.*;
 
 public class CollectionManager {
     private final Map<Integer, Person> collection = new LinkedHashMap<>();
-
+    private final BackUpManager backUpManager = new BackUpManager(".backUp_file");
     private LocalDateTime lastInitTime;
 
     Path path;
@@ -24,7 +24,7 @@ public class CollectionManager {
         this.path = path;
     }
 
-    public void add(Person person) {
+    public void add(Person person){
         Integer id = collection.values().stream()
                 .map(Person::getId).max(Integer::compareTo)
                 .orElse(0) + 1;
@@ -35,6 +35,11 @@ public class CollectionManager {
         person.validate();
         collection.put(id, person);
         setLastInitTime(LocalDateTime.now());
+        try {
+            makeBackUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("New element added to collection successfully. ");
     }
 
@@ -46,6 +51,11 @@ public class CollectionManager {
         person.validate();
         collection.put(id, person);
         setLastInitTime(LocalDateTime.now());
+        try {
+            makeBackUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("New element added to collection successfully. ");
     }
 
@@ -68,10 +78,12 @@ public class CollectionManager {
         } catch (IOException e) {
             System.err.printf("Failed when trying to write to %s: %s%n", path.getFileName(), e.getMessage());
             throw e;
+        } finally {
+            backUpManager.deleteBackUpFile();
         }
     }
 
-    public void loadCollection() throws NullPointerException {
+    public void loadCollection(Path path) throws NullPointerException {
         try {
             List<Person> personList = new DumpManager(path).jsonFileToList();
             if (personList == null || personList.isEmpty()) {
@@ -121,12 +133,43 @@ public class CollectionManager {
     }
 
     public void removeById(Integer id) {
-        collection.remove(id);
+        try {
+            collection.remove(id);
+            makeBackUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean removeAll() {
-        collection.clear();
+        try {
+            collection.clear();
+            makeBackUp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return true;
+    }
+
+    public void makeBackUp() throws IOException {
+        try{
+            backUpManager.deleteBackUpFile();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
+                    .setPrettyPrinting()
+                    .create();
+
+            String jsonCollection = gson.toJson(collection.values());
+
+            try (FileWriter writer = new FileWriter(backUpManager.fileName())) {
+                writer.write(jsonCollection);
+            } catch (IOException e) {
+                System.err.printf("Failed when trying to write to %s: %s%n", path.getFileName(), e.getMessage());
+                throw e;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public Map<Integer, Person> getCollection() {

@@ -4,6 +4,7 @@ import lab5.itmo.client.CommandManager;
 import lab5.itmo.client.commands.*;
 import lab5.itmo.client.io.Controller;
 import lab5.itmo.client.io.console.StandartConsole;
+import lab5.itmo.collection.managers.BackUpManager;
 import lab5.itmo.collection.managers.CollectionManager;
 
 import java.nio.file.Path;
@@ -15,9 +16,11 @@ public class Main {
             Path collectionPath = Path.of(System.getProperty("collection", args[0].trim()));
             CommandManager commandManager = new CommandManager();
             CollectionManager collectionManager = new CollectionManager(collectionPath);
+            String backUpFile = ".backUp_file";
+            BackUpManager backUpManager = new BackUpManager(backUpFile);
 
             try {
-                collectionManager.loadCollection();
+                collectionManager.loadCollection(collectionPath);
             } catch (NullPointerException e) {
                 console.printError(e.getMessage());
                 console.println("Continuing with empty collection.");
@@ -29,7 +32,7 @@ public class Main {
             commandManager.register(new Show(console, collectionManager));
             commandManager.register(new Clear(console, collectionManager));
             commandManager.register(new Save(collectionManager));
-            commandManager.register(new Exit());
+            commandManager.register(new Exit(console, backUpManager, collectionManager));
             commandManager.register(new History(console, commandManager));
             commandManager.register(new UpdateId(console, collectionManager));
             commandManager.register(new Insert(console, collectionManager));
