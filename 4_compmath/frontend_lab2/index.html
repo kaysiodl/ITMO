@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Нелинейные функции</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin:0; padding:0; }
+        .container { display: flex; height: 100vh; }
+        .controls { width: 300px; padding: 20px; background: #f5f5f5; display: flex; flex-direction: column; gap: 10px; }
+        .graph-container { flex: 1; padding: 20px; }
+        input, select, button { padding: 5px; }
+        button { cursor: pointer; margin-top: 10px; }
+        .result { margin-top: 20px; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="controls">
+        <h2>Параметры</h2>
+        <label>Функция:</label>
+        <select id="funcSelect">
+            <option value="f1">x³ + 2.28x² - 1.934x - 3.907</option>
+            <option value="f2">sin(x) - x/2</option>
+            <option value="f3">x² - 4</option>
+        </select>
+
+        <label>Метод:</label>
+        <select id="methodSelect">
+            <option value="chord">Метод хорд</option>
+            <option value="secant">Метод секущих</option>
+            <option value="iteration">Простая итерация</option>
+        </select>
+
+        <label>a:</label>
+        <input type="number" id="a" value="1" step="0.1">
+        <label>b:</label>
+        <input type="number" id="b" value="2" step="0.1">
+        <label>ε:</label>
+        <input type="number" id="eps" value="0.0001" step="0.0001">
+
+        <button id="solveBtn">Решить</button>
+
+        <div class="result" id="resultBlock">
+            <h3>Результат</h3>
+            <p id="xVal">x = </p>
+            <p id="fxVal">f(x) = </p>
+            <p id="iterVal">Итерации = </p>
+        </div>
+    </div>
+
+    <div class="graph-container">
+        <div id="plot" style="width:100%; height:100%;"></div>
+    </div>
+</div>
+
+<script>
+    // функции
+    function f1(x) { return x**3 + 2.28*x**2 - 1.934*x - 3.907; }
+    function f2(x) { return Math.sin(x) - x/2; }
+    function f3(x) { return x**2 - 4; }
+
+    // метод хорд (заглушка для проверки)
+    function chordMethod(a, b, eps, func) {
+        let x = (a+b)/2; // просто для теста
+        return {x:x, fx:func(x), iterations:5};
+    }
+
+    document.getElementById("solveBtn").addEventListener("click", () => {
+        const funcSelect = document.getElementById("funcSelect").value;
+        const methodSelect = document.getElementById("methodSelect").value;
+        const a = parseFloat(document.getElementById("a").value);
+        const b = parseFloat(document.getElementById("b").value);
+        const eps = parseFloat(document.getElementById("eps").value);
+
+        let func = funcSelect === "f1" ? f1 : funcSelect === "f2" ? f2 : f3;
+        let result;
+
+        // пока заглушка, потом сюда подключим все методы
+        result = chordMethod(a, b, eps, func);
+
+        // вывод результата
+        document.getElementById("xVal").innerText = "x = " + result.x.toFixed(5);
+        document.getElementById("fxVal").innerText = "f(x) = " + result.fx.toFixed(5);
+        document.getElementById("iterVal").innerText = "Итерации = " + result.iterations;
+
+        // строим график
+        const xs = [];
+        const ys = [];
+        for(let i=a-1; i<=b+1; i+=0.01) {
+            xs.push(i);
+            ys.push(func(i));
+        }
+
+        const traces = [
+            { x: xs, y: ys, mode: 'lines', name: 'f(x)' },
+            { x: [result.x], y: [result.fx], mode: 'markers', marker:{color:'red', size:10}, name:'Корень' }
+        ];
+
+        Plotly.newPlot('plot', traces, {margin:{t:40}});
+    });
+</script>
+
+</body>
+</html>

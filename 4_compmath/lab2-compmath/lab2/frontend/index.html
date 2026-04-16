@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Нелинейные функции</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<div style="padding:6px 10px; background:#ddd; display:flex; gap:10px;">
+    <button class="tab-btn active" id="singleModeBtn">Одиночное уравнение</button>
+    <button class="tab-btn" id="systemModeBtn">Система уравнений</button>
+</div>
+
+<div class="container">
+    <div class="controls" id="singlePanel">
+        <h2>Параметры</h2>
+        <label>Функция:</label>
+        <select id="funcSelect">
+            <option value="f1">x³ + 2.28x² - 1.934x - 3.907</option>
+            <option value="f2">sin(x) - x/2</option>
+            <option value="f3">x² - 4</option>
+        </select>
+        <label>Метод:</label>
+        <select id="methodSelect">
+            <option value="chord">Метод хорд</option>
+            <option value="secant">Метод секущих</option>
+            <option value="iteration">Простая итерация</option>
+        </select>
+        <label>a:</label>
+        <input type="number" id="a" value="1" step="0.1">
+        <label>b:</label>
+        <input type="number" id="b" value="2" step="0.1">
+        <label>ε:</label>
+        <input type="number" id="eps" value="0.0001" step="0.0001">
+
+        <button id="solveBtn">Решить</button>
+        <div id="errorMessage2" style="color: #ff4444; margin: 10px 0; display: none; padding: 10px; border: 1px solid #ff4444; border-radius: 4px; background: rgba(255, 68, 68, 0.1);"></div>
+        <div class="result" id="resultBlock">
+            <h3>Результат</h3>
+            <p id="xVal">x = </p>
+            <p id="fxVal">f(x) = </p>
+            <p id="iterVal">Итерации = </p>
+        </div>
+    </div>
+    <div class="controls" id="systemPanel" style="display:none;">
+        <h2>Система уравнений</h2>
+        <label>Система:</label>
+        <select id="sysSelect">
+            <option value="sys1">
+                x - cos(y) - 0.5 = 0
+                and
+                y - sin(x) + 0.3 = 0
+            </option>
+            <option value="sys2">
+                x² + y - 2 = 0
+                and
+                x + y² - 2 = 0
+            </option>
+        </select>
+        <label>Начальное приближение x:</label>
+        <input type="number" id="x_0" value="1" step="0.1">
+        <label>Начальное приближение y:</label>
+        <input type="number" id="y_0" value="2" step="0.1">
+        <label>ε:</label>
+        <input type="number" id="sysEps" value="0.0001" step="0.0001">
+        <button id="solveSysBtn">Решить</button>
+        <div id="errorMessage1" style="color: #ff4444; margin: 10px 0; display: none; padding: 10px; border: 1px solid #ff4444; border-radius: 4px; background: rgba(255, 68, 68, 0.1);"></div>
+        <div class="result" id="sysResultBlock">
+            <h3>Результат</h3>
+            <p id="sysX1">x = </p>
+            <p id="sysX2">y = </p>
+            <p id="sysIter">Итерации = </p>
+            <hr>
+            <h3>Погрешности</h3>
+            <p id="sysErr1">|x^(k) - x^(k-1)| = </p>
+            <p id="sysErr2">|y^(k) - y^(k-1)| = </p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="graph-container">
+        <div id="plot" style="width:100%; height:100%;"></div>
+    </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>
