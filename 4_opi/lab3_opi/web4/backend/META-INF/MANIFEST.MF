@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+MD5-Files: Result.java:0b86364a2b3e85958e12b43744331f5a, ResultsReposito
+ ry.java:b6d7a54d5275759f1a0fce99ff446df9, User.java:b657b6ff3535b30489d
+ 2ed2230bf5534, UserRepository.java:0e54f8fb16f7b1fa26a0452146801191, Au
+ thRequest.java:fa564236d537b0f52a0d455d9386d4d2, PageResponse.java:0dec
+ f78f538bbf38f1fd077b5d0928a6, ResultsRequestDTO.java:abb35a75aea1b41d6c
+ d401cce937ec3f, ResultsResponseDTO.java:039335a39df23501e7d455025ba153b
+ 6, AuthResource.java:20256a1a749b89950779cbe592569b77, RestApplication.
+ java:04b5e267273d9b91d4fc876765c64c65, ResultsResource.java:da507afc8e1
+ 8c21742656fc673bafb6d, AuthService.java:195db36f4cfe49dd789a1c8cb1f3529
+ f, ResultsService.java:5748fff2baf0d6471e317810e3f2e2ce, PasswordUtil.j
+ ava:cdc9e6ea61f63a4cbf42564e6bd3594c, ValidationUtil.java:de2859c16704b
+ cddc36e724c20a9087f
+SHA1-Files: Result.java:49a549e35daec79fb5e8f594e72d745220769828, Result
+ sRepository.java:b42ef4948ee29b4f14437d30d233849a2cb222e9, User.java:41
+ 23a27c98aebff2c9c307cc368461e7ea73daeb, UserRepository.java:7fbfcec8ac8
+ e007e943fc1937180114c1da11f86, AuthRequest.java:a0863e13b1436dd627d722c
+ fd59a784c2dd4c0f4, PageResponse.java:b814804733e97d993141e62a714fe72be1
+ ae834d, ResultsRequestDTO.java:4cf193eec5af784a9207807cc18e08463a8cc85c
+ , ResultsResponseDTO.java:12cc9fe9fea44adf8186b7562575ddbcaf6d65d7, Aut
+ hResource.java:0b3fa2b8894d53f15e56b0e59196c11ea1b61ac1, RestApplicatio
+ n.java:3bbae0f02f5d1d533ab5b01cc67e22eb7714c372, ResultsResource.java:6
+ 30536a0e0505d6cedc4ca71981a82931f4c3b7d, AuthService.java:37f4dea28a823
+ f653336bd2891d409cd5da480ff, ResultsService.java:3d08d9e1b9459940b8fab5
+ 4c5a0dc54f47a9b9ad, PasswordUtil.java:703f873d9ca365955de4246df1b7363ba
+ 6f6f5dc, ValidationUtil.java:ee5db0d6a8d7e9bae1192c36cb5a59d2c177aa37
+

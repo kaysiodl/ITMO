@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence">
+
+    <persistence-unit name="lab3" transaction-type="JTA">
+        <jta-data-source>java:/PostgresDS</jta-data-source>
+
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform"/>
+            <property name="hibernate.ejb.naming_strategy_delegator" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <property name="hibernate.bytecode.use_reflection_optimizer" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
