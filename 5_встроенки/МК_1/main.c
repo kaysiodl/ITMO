@@ -55,6 +55,11 @@ static void handleKey(char k) {
 
   if (k == '#') {
     if (firstValue != -1 && secondValue != -1 && counter != 0){
+      if (operation == '/' && secondValue == 0){
+        printf("Ошибка: деление на 0\n");
+        resetAll();
+        return;
+      }
       if (operation == '+'){
         displayValue = firstValue + secondValue;
       } else if(operation == '-'){
@@ -64,7 +69,7 @@ static void handleKey(char k) {
       } else {
         displayValue = firstValue / secondValue;
       }
-    printf("Результат = %d\n", displayValue);
+    printf("%d %c %d = %d\n", firstValue, operation, secondValue, displayValue);
     }
     resetAll();
     return;
